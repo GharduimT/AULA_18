@@ -1,4 +1,4 @@
-import matplotlib as plt
+import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 
@@ -128,9 +128,28 @@ except Exception as e:
 
 #$ pip install matplotlib
 try:
-    fig, ax =plt.subplots(1, 2, figsize=12, 5)
+    fig, ax = plt.subplots(1, 2, figsize=(12, 5))
+#  outliers inferiores
+    if not df_roubo_veiculo_outliers_inferiores.empty: 
+        dados_inferiores = df_roubo_veiculo_outliers_inferiores.sort_values(by='roubo_veiculo', ascending=True)
 
-    if not df_roubo_veiculo_outliers_inferiores
-except Exception
+        ax[0].barh(dados_inferiores['munic'], dados_inferiores['roubo_veiculo'])
+    else:
+        ax[0].text(0.5, 0.5, 'Sem Outliers', ha='center', fontsize=10)
+        ax[0].set_title('Outliers Inferiores')
+#  Outliers Superiores
+    if not df_roubo_veiculo_outliers_superiores.empty: 
+        dados_superiores = df_roubo_veiculo_outliers_superiores.sort_values(by='roubo_veiculo', ascending=True)
+
+        ax[1].barh(dados_superiores['munic'], dados_superiores['roubo_veiculo'])
+    else:
+        ax[1].text(0.5, 0.5, 'Sem Outliers', ha='center', fontsize=10)
+        ax[1].set_title('Outliers Superiores')
+    plt.tight_layout()
+
+    plt.show()
+
+
+except Exception as e:
     print(f'Erro: {e}')
     exit()
