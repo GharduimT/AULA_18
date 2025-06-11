@@ -1,14 +1,4 @@
-# '''EXEMPLO
-
-# O delegado da delegacia de roubos e furtos de automóveis, entrou em contato solicitando a sua ajuda. Ele lhe pediu para realizar uma observação mais aprofundada, acerca do total de roubos de veiculos, através das cidades do estado do Rio de Janeiro.
-
-# Ele mencionou, que gostaria de um estudo mais aprofundado, no qual pudesse obter informações acerca de como esses dados estão distribuídos, para identificar os grupos de municípios com menos e aqueles com mais roubos de veículos, além de expor, municípios que possuam roubos muito acima do comportamento dos demais municípios do Estado.'''
-
-# '''
-# 1 consulta do isp (por conta da demanda do cliente e falta de clareza da proposta)
-# 2 Dicionário (em muitos dos casos não se tem domínio dos termos técnicos a respeito da pip)
-# '''
-# from utils import limpar_nome_municipio
+import matplotlib as plt
 import pandas as pd
 import numpy as np
 
@@ -27,7 +17,7 @@ try:
     df_ocorrencia = df_ocorrencia[['munic', 'roubo_veiculo']]
     #  totalizando
     df_roubo_veiculo = df_ocorrencia.groupby('munic').sum(['roubo_veiculo']).reset_index()  # todas as vezes que aparecer o município além de agrupar irá somar as colunas/// reset.index 
-    print(df_roubo_veiculo.to_string())
+    # print(df_roubo_veiculo.to_string())
 
 except Exception as e:
     print(f"Erro de conexão: {e}")
@@ -58,11 +48,19 @@ try:
     q2 = np.quantile(array_roubo_veiculo, 0.50, method='weibull')
     q3 = np.quantile(array_roubo_veiculo, 0.75, method='weibull')
     
-    print("\nMEDIDAS DE TENÊNCIA CENTRAL")
+    print("\nMEDIDAS DE POSIÇÃO")
     print(30*"=")
-    print(f"Q1: {q1}")
-    print(f"Q2: {q2}")
-    print(f"Q3: {q3}")
+    # print(f"Q1: {q1}")
+    # print(f"Q2: {q2}")
+    # print(f"Q3: {q3}")
+
+    #MEDIDAS DE DISPERSÃO<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<10/06>>>>>>>>>>>>>>>>>>
+    print("\nMEDIDAS DE DISPERSÃO")
+    maximo = np.max(array_roubo_veiculo)
+    minimo = np.min(array_roubo_veiculo)
+    amplitude_total = maximo - minimo  # quanto mais próximo de zero, do mínimo mais homogêneo e se for zero todos os dados são iguais. Do inverso mais heterogeneo será   
+    
+
 
     # ROUBAM MAIS E ROUBAM MENOS
     # ROUBAM MENOS
@@ -90,6 +88,22 @@ try:
     print(f'Limite inferior: {limite_inferior}')
     print(f'Limite superior: {limite_superior}')
 
+    print('\nMEDIDAS')
+    print(f"Limite Inferior: {limite_inferior}")
+    print(f"Menor valor: {minimo}")
+
+    print(f"Q1: {q1}")
+    print(f"Q2: {q2}")
+    print(f"Q3: {q3}")
+    print(f"IQR: {iqr}")
+
+    print(f"Maior valor: {maximo}")
+    print(f"Limite Superior: {limite_superior}")
+    print(f"Media: {media_roubo_veiculo}")
+    print(f"Mediana: {mediana_roubo_veiculo}")
+    print(F"Distancia MÉDIA e MEDIANA {distancia}")
+
+
     #Descobrindo Outliers
     df_roubo_veiculo_outliers_superiores = df_roubo_veiculo[df_roubo_veiculo['roubo_veiculo'] > limite_superior]
     df_roubo_veiculo_outliers_inferiores = df_roubo_veiculo[df_roubo_veiculo['roubo_veiculo'] < limite_inferior]
@@ -111,3 +125,12 @@ try:
 
 except Exception as e:
     print(f'Erro no processamento das medidas {e}')
+
+#$ pip install matplotlib
+try:
+    fig, ax =plt.subplots(1, 2, figsize=12, 5)
+
+    if not df_roubo_veiculo_outliers_inferiores
+except Exception
+    print(f'Erro: {e}')
+    exit()
